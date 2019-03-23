@@ -11,7 +11,7 @@ rotN alphabetSize symbol = toEnum shiftedSymbolAsInt
     shiftedSymbolAsInt = (symbolAsInt + halfAlphabet) `mod` alphabetSize
     halfAlphabet = alphabetSize `div` 2
 
-
+-- TODO: review how this works, i.e. how return-type polimorphism works
 listEnum :: (Bounded a, Enum a) => [a]
 listEnum = [minBound .. maxBound]
 
@@ -19,6 +19,7 @@ listEnum = [minBound .. maxBound]
 {-- How do I implement a function to calculate the size of any
  -- Bounded, Enum type?
  -- the following doesn't work
+-- TODO: return type polimophism seems to fail composibility in this case, or am I missing something?
 enumSize :: (Bounded a, Enum a) => Int
 enumSize = fromEnum (maxBound :: a) + 1
 --}
