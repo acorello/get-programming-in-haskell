@@ -84,16 +84,10 @@ byteToChar = toEnum . byteToInt
 
 
 applyOTP :: String -> String -> String
-applyOTP otp plaintext =
-  let
-    encryptedByte = applyOTP' otp plaintext
-  in
-    map byteToChar encryptedByte
-
---
-applyOTP' :: String -> String -> Bytes
-applyOTP' otp plaintext =  map xorPairOfBytes $ zip otpBytes plaintextBytes
-  where otpBytes = map charToByte otp
-        plaintextBytes = map charToByte plaintext
-        xorPairOfBytes (left, right) = xorByte left right
---}
+applyOTP otp plaintext = map byteToChar $ applyOTP' plaintext
+  where
+    applyOTP' :: String -> Bytes
+    applyOTP' plaintext =  map xorPairOfBytes $ zip otpBytes plaintextBytes
+    otpBytes = map charToByte otp
+    plaintextBytes = map charToByte plaintext
+    xorPairOfBytes (left, right) = xorByte left right
