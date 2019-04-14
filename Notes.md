@@ -11,6 +11,8 @@ But is this correct?
 
 ## Lesson 16
 
+### Surprising Pattern Matching Behaviour
+
 Non-Exhaustive pattern matching doesn't fail compilation when the pattern is nested.
 
 I.e.
@@ -42,3 +44,22 @@ instance Show T where
    -- showD (C char) = show char -- if this is missing compilation does fail
   show (U string) = string -- if this is missing compilation does fail
 ```
+
+#### Records don't warn about non-exhaustive pattern matching
+
+Given a data-type:
+
+```haskell
+data StoreItem = Book { ... , bookPrice :: Double }
+               | Vinyl { ... , vinylPrice :: Double }
+			   | Toy { ... , toyPrice :: Double }
+
+price :: StoreItem -> Double
+price Book {bookPrice = price} = price
+price Toy {toyPrice = price} = price
+```
+
+I don't get a compilation error on the price function.
+I expected it to fail because `Vinyl` case is not specified.
+
+However if I enable `-Wincomplete-patterns` it does warn me about it.
