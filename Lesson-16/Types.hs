@@ -41,28 +41,50 @@ data StoreItem = Book
                  , toyDescription :: String
                  , toyPrice       :: Double
                  }
+               | Pamphlet
+               { pamphletTitle :: String
+               , pamphletDescription :: String
+               , pamphletContact :: Name
+               }
                deriving (Show)
 
 price :: StoreItem -> Double
 price Book {bookPrice = p} = p
 price VinylRecord {recordPrice = p} = p
 price Toy {toyPrice = p} = p
+price Pamphlet {} = 0.0
 
 madeBy :: StoreItem -> String
 madeBy Book {bookCreator = c} = show c
 madeBy VinylRecord {recordCreator = c} = show c
-madeBy Toy _ = "N/A"
+madeBy Toy {} = "N/A"
+madeBy Pamphlet {} = "N/A"
 
-c = Toy
-  { toyName = "Toy"
-  , toyDescription = "Great Toy"
-  , toyPrice = 10.60
-  }
+toy1 = Toy
+       { toyName = "Toy"
+       , toyDescription = "Great Toy"
+       , toyPrice = 10.60
+       }
 
-b = Book
-  { bookCreator = Person $ Name "Joe" "Blogg"
-  , bookIsbn = ""
-  , bookTitle = "Joy"
-  , bookYear = 1980
-  , bookPrice = 50.0
-  }
+book1 = Book
+        { bookCreator = Person $ Name "Joe" "Blogg"
+        , bookIsbn = ""
+        , bookTitle = "Joy"
+        , bookYear = 1980
+        , bookPrice = 50.0
+        }
+
+
+data Shape = Circle Double
+           | Square Double
+           | Rectangle Double Double
+           
+perimeter :: Shape -> Double
+perimeter (Circle radius) = radius * 2.0 * pi
+perimeter (Square side) = 4.0 * side
+perimeter (Rectangle side1 side2) = 2.0 * (side1 + side2)
+
+area :: Shape -> Double
+area (Circle radius) = radius * radius * pi
+area (Square side) = side * side
+area (Rectangle side1 side2) = side1 * side2
