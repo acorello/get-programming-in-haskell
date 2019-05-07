@@ -1,14 +1,18 @@
-type FirstName = String
+type FirstName
+  = String
 
-type LastName = String
+type LastName
+  = String
 
-type MiddleName = String
+type MiddleName
+  = String
 
-data Name = Name FirstName LastName
-          | NameWithMiddle FirstName MiddleName LastName
-          | TwoInitialsWithLast Char Char LastName
-          | FirstNameWithTwoInits FirstName Char Char
-
+data Name
+  = Name FirstName LastName
+  | NameWithMiddle FirstName MiddleName LastName
+  | TwoInitialsWithLast Char Char LastName
+  | FirstNameWithTwoInits FirstName Char Char
+  
 instance Show Name where
   show (Name firstname lastname) =
     "'" ++ firstname ++ " " ++ lastname ++ "'"
@@ -19,34 +23,36 @@ instance Show Name where
   show (FirstNameWithTwoInits firstname m l) =
     "'" ++ firstname ++ " " ++ [m] ++ " " ++ [l] ++ "'"
 
-data Creator = Person Name
-             | Band String
-             deriving (Show)
+data Creator
+  = Person Name
+  | Band String
+  deriving (Show)
 
-data StoreItem = Book
-                 { bookCreator :: Creator
-                 , bookIsbn    :: String
-                 , bookTitle   :: String
-                 , bookYear    :: Int
-                 , bookPrice   :: Double
-                 }
-               | VinylRecord
-                 { recordCreator :: Creator
-                 , recordTitle   :: String
-                 , recordYear    :: Int
-                 , recordPrice   :: Double
-                 }
-               | Toy
-                 { toyName        :: String
-                 , toyDescription :: String
-                 , toyPrice       :: Double
-                 }
-               | Pamphlet
-               { pamphletTitle :: String
-               , pamphletDescription :: String
-               , pamphletContact :: Name
-               }
-               deriving (Show)
+data StoreItem
+  = Book
+    { bookCreator :: Creator
+    , bookIsbn    :: String
+    , bookTitle   :: String
+    , bookYear    :: Int
+    , bookPrice   :: Double
+    }
+  | VinylRecord
+    { recordCreator :: Creator
+    , recordTitle   :: String
+    , recordYear    :: Int
+    , recordPrice   :: Double
+    }
+  | Toy
+    { toyName        :: String
+    , toyDescription :: String
+    , toyPrice       :: Double
+    }
+  | Pamphlet
+    { pamphletTitle :: String
+    , pamphletDescription :: String
+    , pamphletContact :: Name
+    }
+  deriving (Show)
 
 price :: StoreItem -> Double
 price Book {bookPrice = p} = p
@@ -75,10 +81,11 @@ book1 = Book
         }
 
 
-data Shape = Circle Double
-           | Square Double
-           | Rectangle Double Double
-           
+data Shape
+  = Circle Double
+  | Square Double
+  | Rectangle Double Double
+
 perimeter :: Shape -> Double
 perimeter (Circle radius) = radius * 2.0 * pi
 perimeter (Square side) = 4.0 * side
